@@ -7,6 +7,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 # если надо
 class SiteUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)  # соединение с оргинальной таблицы
+    # TODO: в тестах проверять на соответствсие этого поля с данными из таблицы Orders
+    has_opened_order = models.BooleanField(default=False)  # Для оптимизации
 
 
 # Нужна для связи с клиентом, а также для добавления спсика использованных клиентом номеров при заказе
@@ -15,8 +17,9 @@ class UserPhones(models.Model):
     phone = PhoneNumberField(not_null=True)
 
 
-class UserAddreses(models.Model):
-    user = models
-    user_email = models.EmailField(not_null=True)
+# Для хранения использованных клиентом адрессов
+class UserAddresses(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_address = models.CharField(not_null=True, max_length=511)
 
 

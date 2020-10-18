@@ -11,7 +11,7 @@ class Orders(models.Model):
     PAYED = 'P'  # заказ оплачен и не получен
     RESERVED = 'R'  # заказ как либо зарезервирован
     OPENED = 'O'  # заказ открыт и неоплачен (в корзине)
-    # ХЗ как сделать так, чтобы можно было прочитать но не изменить эти поля
+    # ХЗ как сделать так, чтобы можно было прочитать, но не изменить эти поля
     status_choices = [(FULFILLED, 'Получен'), (CANCELED, 'Отменен'), (PAYED, 'Оплачен'),
                       (RESERVED, 'Зарезервирован'), (OPENED, 'Открыт')]
 
@@ -19,8 +19,51 @@ class Orders(models.Model):
     # TODO: Проработать choices
     payment_type = models.CharField(max_length=2)
     # TODO: в тестах проверять наличие всех адрессов для данного пользователя в таблице UserAddresses
-    order_address = models.CharField(not_null=True, max_length=511)
+    order_address = models.CharField(not_null=True, max_length=512)
     # TODO: в тестах проверять наличие всех адрессов для данного пользователя в таблице UserPhones
     order_phone_num = PhoneNumberField(not_null=True)
     order_status = models.CharField(not_null=True, max_length=1, choices=status_choices)
+    # поле вычисляется на основе OrderGoods
     order_cost = models.FloatField()
+    # здесь проставливаются даты установления соответствующих состояний заказов
+    date_reserved = models.DateField()
+    date_payed = models.DateField()
+    date_fulfilled = models.DateField()
+
+
+class Goods(models.Model):
+    PERFUME = 'per'
+    COSMETICS = 'cos'
+    goods_types = [(PERFUME, 'Парфюм'), (COSMETICS, 'Косметика')]
+    name = models.CharField(not_null=True, max_length=256)
+    price = models.FloatField()
+    producer = models.CharField(max_length=256)
+    info = models.CharField(max_length=512)  # отображаемая инфа о товаре
+    image = models.ImageField()  # большой вариант катринки товара
+    image_preview = models.ImageField()  # малый вариант картинки товара, используемый в спискахэ
+    amount = models.IntegerField()  # количество товара на "складе"
+    type = models.CharField(max_length=3, choices=goods_types)  # типы для поиска
+
+
+# доп инфа для парфюма
+class Perfume(models.Model):
+    good = models.OneToOneField(Goods, on_delete=models.CASCADE)
+    aroma = models.CharField(max_length=256)
+
+
+class SpecialOffers(models.Model):
+    DISCOUNT = 'dis'
+    offer_types = [(DISCOUNT, 'Скидка')]
+    date_begin = models.DateField()  # Начало акции
+    date_ends = models.DateField()  # Конец акции
+    offer_image = models.ImageField()  # Изображение, показуемое на экране
+    type = models.CharField(max_length=3, choices=offer_types)
+
+
+class Discounts(models.Model):
+    offer = models.ForeignKey(SpecialOffers, on_delete=models.CASCADE)
+    good = models.ForeignKey(Goods, on_delete=models.CASCADE)
+    amount = models.IntegerField()  # измеряется в процентах от оригинальной цены
+
+
+

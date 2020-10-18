@@ -43,6 +43,7 @@ class Goods(models.Model):
     image_preview = models.ImageField()  # малый вариант картинки товара, используемый в спискахэ
     amount = models.IntegerField()  # количество товара на "складе"
     type = models.CharField(max_length=3, choices=goods_types)  # типы для поиска
+    show = models.BooleanField()
 
 
 # доп инфа для парфюма

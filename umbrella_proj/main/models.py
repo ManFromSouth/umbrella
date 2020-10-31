@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 # Здесь хранится общая информация о заказах
-class Orders(models.Model):
+class Order(models.Model):
     # Выборы для choices
     FULFILLED = 'F'  # заказ оплачен и получен
     CANCELED = 'C'  # заказ оплачен и отменен
@@ -31,7 +31,7 @@ class Orders(models.Model):
     date_fulfilled = models.DateField()
 
 
-class Goods(models.Model):
+class Good(models.Model):
     PERFUME = 'per'
     COSMETICS = 'cos'
     goods_types = [(PERFUME, 'Парфюм'), (COSMETICS, 'Косметика')]
@@ -48,11 +48,11 @@ class Goods(models.Model):
 
 # доп инфа для парфюма
 class Perfume(models.Model):
-    good = models.OneToOneField(Goods, on_delete=models.CASCADE)
+    good = models.OneToOneField(Good, on_delete=models.CASCADE)
     aroma = models.CharField(max_length=256)
 
 
-class SpecialOffers(models.Model):
+class SpecialOffer(models.Model):
     DISCOUNT = 'dis'
     offer_types = [(DISCOUNT, 'Скидка')]
     date_begin = models.DateField()  # Начало акции
@@ -61,9 +61,9 @@ class SpecialOffers(models.Model):
     type = models.CharField(max_length=3, choices=offer_types)
 
 
-class Discounts(models.Model):
-    offer = models.ForeignKey(SpecialOffers, on_delete=models.CASCADE)
-    good = models.ForeignKey(Goods, on_delete=models.CASCADE)
+class Discount(models.Model):
+    offer = models.ForeignKey(SpecialOffer, on_delete=models.CASCADE)
+    good = models.ForeignKey(Good, on_delete=models.CASCADE)
     amount = models.IntegerField()  # измеряется в процентах от оригинальной цены
 
 

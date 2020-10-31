@@ -14,13 +14,13 @@ class SiteUser(models.Model):
 
 
 # Нужна для связи с клиентом, а также для добавления спсика использованных клиентом номеров при заказе
-class UserPhones(models.Model):
+class UserPhone(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     phone = PhoneNumberField()
 
 
 # Для хранения использованных клиентом адрессов
-class UserAddresses(models.Model):
+class UserAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_address = models.CharField(max_length=511)
 

@@ -1,10 +1,10 @@
 from django.contrib import admin
-from main.models import Discounts, Perfume, Goods, Orders, SpecialOffers
+from main.models import Discount, Perfume, Good, Order, SpecialOffer
 
 # Register your models here.
-admin.site.register(Goods)
+admin.site.register(Good)
 admin.site.register(Perfume)
-admin.site.register(Orders)
-admin.site.register(SpecialOffers)
-admin.site.register(Discounts)
+admin.site.register(Order)
+admin.site.register(SpecialOffer)
+admin.site.register(Discount)
 

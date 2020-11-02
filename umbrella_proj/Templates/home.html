@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Placeholder{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Здравствуйте, {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Выход</a></p>
+{% else %}
+  <p>Вы не вошли</p>
+  <a href="{% url 'login' %}">Вход</a>
+{% endif %}
+{% endblock %}

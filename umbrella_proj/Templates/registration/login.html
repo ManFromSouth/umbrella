@@ -2,12 +2,13 @@
 
 {%block title%}Вход{%endblock%}
 
-{% block content %}}
+{% block content %}
 <h2>Вход</h2>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Войти</button>
+  <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
 </form>
 
 {% endblock %}

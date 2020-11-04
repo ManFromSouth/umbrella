@@ -24,13 +24,14 @@ class UserAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_address = models.CharField(max_length=511)
 
+# Ломают регистрацию и логин, пришлось отключить
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        SiteUser.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         SiteUser.objects.create(user=instance)
+#
+#
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()

@@ -40,7 +40,7 @@ class Good(models.Model):
     producer = models.CharField(max_length=256)
     info = models.CharField(max_length=512)  # отображаемая инфа о товаре
     image = models.ImageField()  # большой вариант катринки товара
-    image_preview = models.ImageField()  # малый вариант картинки товара, используемый в спискахэ
+    image_preview = models.ImageField()  # малый вариант картинки товара, используемый в списках
     amount = models.IntegerField()  # количество товара на "складе"
     type = models.CharField(max_length=3, choices=goods_types)  # типы для поиска
     show = models.BooleanField()
@@ -58,6 +58,7 @@ class SpecialOffer(models.Model):
     date_begin = models.DateField()  # Начало акции
     date_ends = models.DateField()  # Конец акции
     offer_image = models.ImageField()  # Изображение, показуемое на экране
+    reference = models.CharField() # Ссылка для перехода
     type = models.CharField(max_length=3, choices=offer_types)
 
 

@@ -26,5 +26,16 @@ def home_view(request):
         info['amount'] = item.amount
         info['reference'] = item.id
         response.append(info)
-
     return render(request, 'home.html', response)
+
+
+def good_view(request, good_id):
+    response = dict()
+    good = Good.objects.get(id=good_id)
+    response['image'] = good.image
+    response['name'] = good.name
+    response['price'] = good.price
+    response['producer'] = good.producer
+    response['info'] = good.info
+    response['amount'] = good.amount
+    return render(request, 'good_view.html', response)

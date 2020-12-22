@@ -4,8 +4,16 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Здравствуйте, {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Выход</a></p>
+
+{# переменные: image, name, price, producer, info, amount #}
+  <div>
+    <img src="{{image.url}}">
+    <p> {{name}} {{price}}</p>
+    <p>{{producer}} {{info}}</p>
+    <p>{{amount}}</p>
+    <a href="{%url 'home'%}"> Назад </a>
+    {# В корзину #}
+  </div>
 {% else %}
   <p>Вы не вошли</p>
   <a href="{% url 'login' %}">Вход</a>

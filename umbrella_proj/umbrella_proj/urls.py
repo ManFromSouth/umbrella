@@ -16,11 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
+from main import views as main_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('user_control.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', TemplateView.as_view(template_name='home.html'), name='home')
+    path('', main_view.home_view, name='home'),
+    path('good/<int:id_good>', main_view.good_view, name = 'good')
 ]
+
+
+if settings.DEBUG:
+     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

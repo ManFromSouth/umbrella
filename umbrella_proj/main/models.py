@@ -39,8 +39,9 @@ class Good(models.Model):
     price = models.FloatField()
     producer = models.CharField(max_length=256)
     info = models.CharField(max_length=512)  # отображаемая инфа о товаре
-    image = models.ImageField()  # большой вариант катринки товара
-    image_preview = models.ImageField()  # малый вариант картинки товара, используемый в списках
+    image = models.ImageField(upload_to='goods/full')  # большой вариант катринки товара
+    # малый вариант картинки товара, используемый в списках
+    image_preview = models.ImageField(upload_to='goods/previews')
     amount = models.IntegerField()  # количество товара на "складе"
     type = models.CharField(max_length=3, choices=goods_types)  # типы для поиска
     show = models.BooleanField()
@@ -57,8 +58,8 @@ class SpecialOffer(models.Model):
     offer_types = [(DISCOUNT, 'Скидка')]
     date_begin = models.DateField()  # Начало акции
     date_ends = models.DateField()  # Конец акции
-    offer_image = models.ImageField()  # Изображение, показуемое на экране
-    reference = models.CharField() # Ссылка для перехода
+    offer_image = models.ImageField(upload_to='specials/')  # Изображение, показуемое на экране
+    reference = models.CharField(max_length=128, default='offers/inactive')  # Ссылка для перехода
     type = models.CharField(max_length=3, choices=offer_types)
 
 
@@ -66,6 +67,3 @@ class Discount(models.Model):
     offer = models.ForeignKey(SpecialOffer, on_delete=models.CASCADE)
     good = models.ForeignKey(Good, on_delete=models.CASCADE)
     amount = models.IntegerField()  # измеряется в процентах от оригинальной цены
-
-
-

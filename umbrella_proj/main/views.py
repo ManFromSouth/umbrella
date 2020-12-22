@@ -6,36 +6,37 @@ from datetime import date
 # Create your views here.
 def home_view(request):
     # нужно считать данные из таблицы good, оформить в виде списка и передвть в окно
-    response = list()
     # скидки и спецпредложения
     query = SpecialOffer.objects.all()
+    offers = list()
     for item in query:
         if (item.date_ends > date) & (item.date_begin < date):
             info = dict()
-            info['type'] = 'offer'
             info['img'] = item.image
-            response.append(info)
+            info['reference'] = item.reference
+            offers.append(info)
     # Товары
-    query = Good.objects.filter(show=True)[:50]
+    query = Good.objects.filter()[:50]
+    goods = list()
     for item in query:
         info = dict()
-        info['type'] = 'good'
         info['img'] = item.image_preview
         info['name'] = item.name
         info['price'] = item.price
         info['amount'] = item.amount
         info['reference'] = item.id
-        response.append(info)
-    return render(request, 'home.html', response)
+        goods.append(info)
+    print(goods)
+    return render(request, 'home.html', {'goods': goods, 'offers': offers})
 
 
-def good_view(request, good_id):
-    response = dict()
-    good = Good.objects.get(id=good_id)
-    response['image'] = good.image
-    response['name'] = good.name
-    response['price'] = good.price
-    response['producer'] = good.producer
-    response['info'] = good.info
-    response['amount'] = good.amount
-    return render(request, 'good_view.html', response)
+def good_view(request, id_good):
+    good = dict()
+    item = Good.objects.get(id=id_good)
+    good['image'] = item.image
+    good['name'] = item.name
+    good['price'] = item.price
+    good['producer'] = item.producer
+    good['info'] = item.info
+    good['amount'] = item.amount
+    return render(request, 'good_view.html', good)

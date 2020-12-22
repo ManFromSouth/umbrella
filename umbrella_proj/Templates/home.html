@@ -5,9 +5,23 @@
 {% block content %}
 {% if user.is_authenticated %}
   Здравствуйте, {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Выход</a></p>
+<p xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"><a href="{% url 'logout' %}">Выход</a></p>
 {% else %}
   <p>Вы не вошли</p>
   <a href="{% url 'login' %}">Вход</a>
 {% endif %}
+{# Отображение акций #}
+{% for item in offers %}
+    {# image с ссылкой {{item.reference}} #}
+{% endfor %}
+{#Отображение товаров#}
+{% for item in goods %}
+  <div > {##}
+    <p>{{item.reference}} </p>
+    <img src="{{item.img.url}}">
+    <p> <a href="{%url 'good' id_good=item.reference %}">К товару</a>
+    <h3>  {{item.name}} </h3>
+    <a> {{item.price}}  </a> </p>
+  </div>
+{% endfor %}
 {% endblock %}
